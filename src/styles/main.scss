@@ -1,0 +1,283 @@
+@use 'sass:color';
+@use 'variables' as *;
+@use 'breakpoints' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 3px solid $signal;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ---------- ნავიგაცია ---------- */
+.site-nav {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: $ink;
+  color: #fff;
+
+  @include up(sm) {
+    padding: 0.9rem 1.5rem;
+  }
+  @include down(sm) {
+    span:last-child {
+      display: none;
+    }
+  }
+}
+
+/* ---------- კატალოგის განლაგება ---------- */
+.catalog__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+
+  .field {
+    min-width: 0;
+  }
+  @include down(sm) {
+    .field {
+      flex: 1 1 100%;
+    }
+  }
+}
+
+.catalog__filter-toggle {
+  @include up(lg) {
+    display: none;
+  }
+}
+
+.catalog__body {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+
+  @include up(lg) {
+    grid-template-columns: 17rem 1fr;
+    align-items: start;
+  }
+}
+
+.catalog__sidebar {
+  display: none;
+  padding: 1.25rem;
+  background: #fff;
+  border-radius: $radius;
+  border: 1px solid color.adjust($ink, $alpha: -0.9);
+
+  &.is-open {
+    display: block;
+  }
+
+  @include up(lg) {
+    display: block;
+    position: sticky;
+    top: 1rem;
+  }
+}
+
+/* ---------- კურსების ბადე ---------- */
+.course-grid {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: 1fr;
+
+  @include up(md) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include up(xl) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ---------- კურსის ბარათი ---------- */
+.course-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid color.adjust($ink, $alpha: -0.9);
+  border-radius: $radius;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: $teal;
+  }
+
+  &__thumb {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 7.5rem;
+    padding: 0.75rem 1rem;
+    color: #fff;
+  }
+  &__glyph {
+    font-family: 'Noto Serif Georgian', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1;
+    opacity: 0.9;
+  }
+  &__category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+  }
+  &__save {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0;
+    border-radius: 999px;
+    background: #fff;
+    color: $ink;
+    font-size: 1.1rem;
+    cursor: pointer;
+
+    &[aria-pressed='true'] {
+      color: #b57e00;
+    }
+  }
+}
+
+/* ---------- ფორმის ელემენტები ---------- */
+.field {
+  padding: 0.6rem 0.85rem;
+  background: #fff;
+  border: 1px solid color.adjust($ink, $alpha: -0.8);
+  border-radius: $radius;
+  font: inherit;
+  color: $ink;
+}
+
+.filter-title {
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.check-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  cursor: pointer;
+
+  input {
+    width: 1.05rem;
+    height: 1.05rem;
+    accent-color: $teal;
+  }
+}
+
+.segmented {
+  display: flex;
+  border: 1px solid color.adjust($ink, $alpha: -0.8);
+  border-radius: $radius;
+  overflow: hidden;
+
+  button {
+    flex: 1;
+    padding: 0.45rem 0.3rem;
+    border: 0;
+    background: #fff;
+    font: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+
+    & + button {
+      border-left: 1px solid color.adjust($ink, $alpha: -0.8);
+    }
+    &.is-active {
+      background: $teal;
+      color: #fff;
+      font-weight: 600;
+    }
+  }
+}
+
+.btn-primary,
+.btn-ghost {
+  padding: 0.5rem 0.95rem;
+  border-radius: $radius;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.btn-primary {
+  border: 1px solid $teal;
+  background: $teal;
+  color: #fff;
+  &:hover {
+    background: $teal-dark;
+  }
+}
+.btn-ghost {
+  border: 1px solid color.adjust($ink, $alpha: -0.75);
+  background: #fff;
+  color: $ink;
+  &:hover {
+    background: $teal-light;
+  }
+}
+
+.chip {
+  padding: 0.3rem 0.7rem;
+  border: 0;
+  border-radius: 999px;
+  background: $teal-light;
+  color: $teal-dark;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ---------- მდგომარეობები ---------- */
+.state-box {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  background: #fff;
+  border: 1px dashed color.adjust($ink, $alpha: -0.7);
+  border-radius: $radius;
+}
+
+.skeleton {
+  height: 18rem;
+  border-radius: $radius;
+  background: linear-gradient(90deg, #dde4ec 25%, #eef2f6 50%, #dde4ec 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
